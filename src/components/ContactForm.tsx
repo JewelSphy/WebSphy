@@ -5,6 +5,8 @@ import { site } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success" | "error";
 
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
@@ -17,26 +19,59 @@ export function ContactForm() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
+    // Honeypot
+    if (String(data.get("company") || "")) {
+      setStatus("success");
+      form.reset();
+      return;
+    }
+
+    const accessKey =
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || site.web3formsAccessKey;
+    if (!accessKey) {
+      setStatus("error");
+      setError(
+        `Email is still being set up. Please email ${site.email} or text ${site.phone}.`,
+      );
+      return;
+    }
+
+    const payload = {
+      access_key: accessKey,
+      subject: `JewelSphy inquiry — ${String(data.get("service") || "General")}`,
+      from_name: String(data.get("name") || ""),
+      name: String(data.get("name") || ""),
+      email: String(data.get("email") || ""),
+      replyto: String(data.get("email") || ""),
+      service: String(data.get("service") || ""),
+      project_size: String(data.get("budget") || ""),
+      timeline: String(data.get("timeline") || ""),
+      message: String(data.get("message") || ""),
+      botcheck: false,
+    };
+
     try {
-      const response = await fetch("/api/contact", {
+      // Web3Forms free plan requires browser/client submissions (not server IP)
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          email: data.get("email"),
-          service: data.get("service"),
-          budget: data.get("budget"),
-          timeline: data.get("timeline"),
-          message: data.get("message"),
-          company: data.get("company"), // honeypot
-        }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
-      const result = (await response.json()) as { error?: string };
+      const result = (await response.json().catch(() => ({}))) as {
+        success?: boolean;
+        message?: string;
+      };
 
-      if (!response.ok) {
+      if (!response.ok || result.success === false) {
         setStatus("error");
-        setError(result.error || "Something went wrong. Please try again.");
+        setError(
+          result.message ||
+            `Could not send. Email ${site.email} or text ${site.phone}.`,
+        );
         return;
       }
 
@@ -68,7 +103,6 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
-      {/* Honeypot — hidden from real users */}
       <input
         type="text"
         name="company"

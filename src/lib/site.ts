@@ -14,6 +14,8 @@ export const site = {
   linkedin: "https://linkedin.com/in/jewelsphy",
   github: "https://github.com/JewelSphy",
   footerLine: "Small team. Big impact. Your vision. Our code.",
+  // Web3Forms documents this as a public key (safe in client code)
+  web3formsAccessKey: "f1e7fc17-32bc-4fcc-a88b-3fd6edab945a",
 } as const;
 
 export const navLinks = [
