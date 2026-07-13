@@ -1,6 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import { BrandMark } from "@/components/BrandMark";
 import { CTA } from "@/components/CTA";
 import { FAQ } from "@/components/FAQ";
 import { NeedFinder } from "@/components/NeedFinder";
@@ -28,9 +26,19 @@ export default function HomePage() {
 
         <div className="section-inner relative flex min-h-[100svh] flex-col justify-center px-5 pb-20 pt-16 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="fade-up float-soft mx-auto mb-2 w-full max-w-[260px] md:max-w-[320px]">
-              <BrandMark variant="full" href={null} />
-            </div>
+            <p className="eyebrow fade-up justify-center">
+              <span className="sparkle" aria-hidden>
+                ✦
+              </span>
+              {site.fullName}
+              <span className="sparkle" aria-hidden>
+                ✦
+              </span>
+            </p>
+
+            <h1 className="font-display fade-up fade-up-delay-1 mt-5 text-6xl leading-[0.92] text-gold-bright md:text-8xl lg:text-9xl">
+              {site.name}
+            </h1>
 
             <div className="gold-rule fade-up fade-up-delay-1 mx-auto my-6 max-w-md">
               <span className="px-3 text-[0.72rem] uppercase tracking-[0.32em] text-ink">
@@ -214,21 +222,9 @@ export default function HomePage() {
             <p className="prose-muted mt-5">
               A growing studio focused on shipping sites and systems that help your business move.
             </p>
-            <div className="mt-8 flex items-center gap-4">
-              <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-line-strong">
-                <Image
-                  src="/brand/logo.png"
-                  alt=""
-                  width={64}
-                  height={64}
-                  className="h-full w-full scale-[1.35] object-cover object-[center_12%]"
-                />
-              </div>
-              <div>
-                <p className="font-display text-lg text-gold-bright">{site.fullName}</p>
-                <p className="text-sm text-ink-dim">{site.tagline}</p>
-              </div>
-            </div>
+            <Link href="/about" className="btn btn-ghost mt-8">
+              About the studio
+            </Link>
           </div>
           <ul className="grid gap-4 sm:grid-cols-2">
             {[
