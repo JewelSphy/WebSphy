@@ -36,17 +36,28 @@ export function ContactForm() {
       return;
     }
 
+    const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    const service = String(data.get("service") || "General").trim();
+    const projectSize = String(data.get("budget") || "").trim();
+    const timeline = String(data.get("timeline") || "").trim();
+    const message = String(data.get("message") || "").trim();
+
     const payload = {
       access_key: accessKey,
-      subject: `JewelSphy inquiry — ${String(data.get("service") || "General")}`,
-      from_name: String(data.get("name") || ""),
-      name: String(data.get("name") || ""),
-      email: String(data.get("email") || ""),
-      replyto: String(data.get("email") || ""),
-      service: String(data.get("service") || ""),
-      project_size: String(data.get("budget") || ""),
-      timeline: String(data.get("timeline") || ""),
-      message: String(data.get("message") || ""),
+      subject: `✦ New JewelSphy inquiry — ${service}`,
+      from_name: "JewelSphy Website",
+      replyto: email,
+      // Field names become the labels in the email
+      "Client Name": name,
+      "Client Email": email,
+      "Service Interest": service,
+      "Project Size": projectSize,
+      "Ideal Timeline": timeline,
+      "Project Notes": message,
+      "Submitted From": typeof window !== "undefined" ? window.location.href : site.fullName,
+      // Cleaner table layout in the notification email
+      _template: "table",
       botcheck: false,
     };
 
