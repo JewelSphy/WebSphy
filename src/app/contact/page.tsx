@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ContactForm } from "@/components/ContactForm";
+import { InterestPrefill } from "@/components/InterestPrefill";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -31,13 +33,19 @@ export default function ContactPage() {
               <span className="block text-xs uppercase tracking-[0.18em] text-ink-dim">
                 Phone / text
               </span>
-              <a href={site.phoneHref} className="mt-1 inline-block text-lg text-gold-bright hover:text-gold">
+              <a
+                href={site.phoneHref}
+                className="mt-1 inline-block text-lg text-gold-bright hover:text-gold"
+              >
                 {site.phone}
               </a>
             </li>
             <li>
               <span className="block text-xs uppercase tracking-[0.18em] text-ink-dim">Email</span>
-              <a href={site.emailHref} className="mt-1 inline-block text-lg text-gold-bright hover:text-gold">
+              <a
+                href={site.emailHref}
+                className="mt-1 inline-block text-lg text-gold-bright hover:text-gold"
+              >
                 {site.email}
               </a>
             </li>
@@ -70,9 +78,13 @@ export default function ContactPage() {
         <div className="border border-line bg-bg-elevated/50 p-6 md:p-8">
           <h2 className="font-display text-2xl text-ink">Project inquiry</h2>
           <p className="mt-2 text-sm text-ink-muted">
-            Share service interest, timeline, and project size so we can reply with a useful next step.
+            Share service interest, timeline, and project size so we can reply with a useful next
+            step.
           </p>
           <div className="mt-6">
+            <Suspense fallback={null}>
+              <InterestPrefill />
+            </Suspense>
             <ContactForm />
           </div>
         </div>
