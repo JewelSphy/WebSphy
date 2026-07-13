@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import {
+  buildInquiryEmailHtml,
+  buildInquiryEmailText,
+} from "@/lib/inquiryEmail";
 import { site } from "@/lib/site";
 
 type ContactBody = {
@@ -9,7 +13,8 @@ type ContactBody = {
   budget?: string;
   timeline?: string;
   message?: string;
-  company?: string; // honeypot
+  submittedFrom?: string;
+  company?: string;
 };
 
 function validate(body: ContactBody) {
@@ -19,6 +24,7 @@ function validate(body: ContactBody) {
   const budget = String(body.budget || "").trim() || "Not specified";
   const timeline = String(body.timeline || "").trim() || "Not specified";
   const message = String(body.message || "").trim();
+  const submittedFrom = String(body.submittedFrom || "").trim();
 
   if (!name || !email || !message) {
     return { error: "Name, email, and project notes are required." } as const;
@@ -27,57 +33,13 @@ function validate(body: ContactBody) {
     return { error: "Enter a valid email address." } as const;
   }
 
-  return { name, email, service, budget, timeline, message } as const;
+  return { name, email, service, budget, timeline, message, submittedFrom } as const;
 }
 
-async function sendWithWeb3Forms(fields: {
-  name: string;
-  email: string;
-  service: string;
-  budget: string;
-  timeline: string;
-  message: string;
-}) {
-  const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
-  if (!accessKey) return null;
-
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      access_key: accessKey,
-      subject: `JewelSphy inquiry — ${fields.service}`,
-      from_name: fields.name,
-      name: fields.name,
-      email: fields.email,
-      replyto: fields.email,
-      service: fields.service,
-      budget: fields.budget,
-      timeline: fields.timeline,
-      message: fields.message,
-    }),
-  });
-
-  const data = (await response.json().catch(() => ({}))) as {
-    success?: boolean;
-    message?: string;
-  };
-
-  if (!response.ok || data.success === false) {
-    throw new Error(data.message || "Web3Forms rejected the submission.");
-  }
-
-  return true;
-}
-
-async function sendWithResend(fields: {
-  name: string;
-  email: string;
-  service: string;
-  budget: string;
-  timeline: string;
-  message: string;
-}) {
+async function sendWithResend(
+  fields: ReturnType<typeof validate> & object,
+) {
+  if ("error" in fields) return null;
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return null;
 
@@ -88,18 +50,9 @@ async function sendWithResend(fields: {
     from,
     to: [site.email],
     replyTo: fields.email,
-    subject: `JewelSphy inquiry — ${fields.service}`,
-    text: [
-      `New project inquiry from the JewelSphy site`,
-      "",
-      `Name: ${fields.name}`,
-      `Email: ${fields.email}`,
-      `Service: ${fields.service}`,
-      `Project size: ${fields.budget}`,
-      `Timeline: ${fields.timeline}`,
-      "",
-      fields.message,
-    ].join("\n"),
+    subject: `✦ New JewelSphy inquiry — ${fields.service}`,
+    html: buildInquiryEmailHtml(fields),
+    text: buildInquiryEmailText(fields),
   });
 
   if (error) {
@@ -127,30 +80,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: validated.error }, { status: 400 });
   }
 
-  const hasProvider =
-    Boolean(process.env.WEB3FORMS_ACCESS_KEY) || Boolean(process.env.RESEND_API_KEY);
-
-  if (!hasProvider) {
+  if (!process.env.RESEND_API_KEY) {
     return NextResponse.json(
       {
-        error:
-          "Email is not configured yet. Add WEB3FORMS_ACCESS_KEY or RESEND_API_KEY to web/.env.local — see .env.example.",
+        error: "RESEND_NOT_CONFIGURED",
+        message: "Branded email is not configured yet.",
       },
       { status: 503 },
     );
   }
 
   try {
-    const viaWeb3 = await sendWithWeb3Forms(validated);
-    if (viaWeb3) return NextResponse.json({ ok: true });
-
-    const viaResend = await sendWithResend(validated);
-    if (viaResend) return NextResponse.json({ ok: true });
-
-    return NextResponse.json(
-      { error: "No email provider responded. Check your .env.local keys." },
-      { status: 503 },
-    );
+    await sendWithResend(validated);
+    return NextResponse.json({ ok: true, provider: "resend" });
   } catch (err) {
     const message =
       err instanceof Error

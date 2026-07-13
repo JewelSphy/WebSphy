@@ -19,20 +19,9 @@ export function ContactForm() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    // Honeypot
     if (String(data.get("company") || "")) {
       setStatus("success");
       form.reset();
-      return;
-    }
-
-    const accessKey =
-      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || site.web3formsAccessKey;
-    if (!accessKey) {
-      setStatus("error");
-      setError(
-        `Email is still being set up. Please email ${site.email} or text ${site.phone}.`,
-      );
       return;
     }
 
@@ -42,52 +31,100 @@ export function ContactForm() {
     const projectSize = String(data.get("budget") || "").trim();
     const timeline = String(data.get("timeline") || "").trim();
     const message = String(data.get("message") || "").trim();
+    const submittedFrom =
+      typeof window !== "undefined" ? window.location.href : site.fullName;
 
-    const payload = {
-      access_key: accessKey,
-      subject: `✦ New JewelSphy inquiry — ${service}`,
-      from_name: "JewelSphy Website",
-      replyto: email,
-      // Field names become the labels in the email
-      "Client Name": name,
-      "Client Email": email,
-      "Service Interest": service,
-      "Project Size": projectSize,
-      "Ideal Timeline": timeline,
-      "Project Notes": message,
-      "Submitted From": typeof window !== "undefined" ? window.location.href : site.fullName,
-      // Cleaner table layout in the notification email
-      _template: "table",
-      botcheck: false,
+    const fields = {
+      name,
+      email,
+      service,
+      budget: projectSize,
+      timeline,
+      message,
+      submittedFrom,
+      company: data.get("company"),
     };
 
     try {
-      // Web3Forms free plan requires browser/client submissions (not server IP)
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
+      // Prefer branded HTML email via Resend (our API)
+      const apiRes = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fields),
       });
 
-      const result = (await response.json().catch(() => ({}))) as {
-        success?: boolean;
-        message?: string;
-      };
-
-      if (!response.ok || result.success === false) {
-        setStatus("error");
-        setError(
-          result.message ||
-            `Could not send. Email ${site.email} or text ${site.phone}.`,
-        );
+      if (apiRes.ok) {
+        setStatus("success");
+        form.reset();
         return;
       }
 
-      setStatus("success");
-      form.reset();
+      const apiData = (await apiRes.json().catch(() => ({}))) as {
+        error?: string;
+      };
+
+      // Fall back to Web3Forms if Resend isn't set up yet
+      if (apiData.error === "RESEND_NOT_CONFIGURED" || apiRes.status === 503) {
+        const accessKey =
+          process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || site.web3formsAccessKey;
+
+        const formattedNotes = [
+          `✦ NEW JEWELSPHY INQUIRY`,
+          ``,
+          `Client:   ${name}`,
+          `Email:    ${email}`,
+          `Service:  ${service}`,
+          `Size:     ${projectSize}`,
+          `Timeline: ${timeline}`,
+          ``,
+          `PROJECT NOTES`,
+          `────────────`,
+          message,
+          ``,
+          `Submitted from: ${submittedFrom}`,
+        ].join("\n");
+
+        const response = await fetch(WEB3FORMS_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: `✦ New JewelSphy inquiry — ${service}`,
+            from_name: "JewelSphy Website",
+            replyto: email,
+            email,
+            name,
+            message: formattedNotes,
+            botcheck: false,
+          }),
+        });
+
+        const result = (await response.json().catch(() => ({}))) as {
+          success?: boolean;
+          message?: string;
+        };
+
+        if (!response.ok || result.success === false) {
+          setStatus("error");
+          setError(
+            result.message ||
+              `Could not send. Email ${site.email} or text ${site.phone}.`,
+          );
+          return;
+        }
+
+        setStatus("success");
+        form.reset();
+        return;
+      }
+
+      setStatus("error");
+      setError(
+        apiData.error || `Could not send. Email ${site.email} or text ${site.phone}.`,
+      );
     } catch {
       setStatus("error");
       setError(`Could not send. Email ${site.email} or text ${site.phone}.`);
