@@ -2,7 +2,12 @@
 
 import Script from "next/script";
 
-/** Optional GA4 — set NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXX in env to enable. */
+/**
+ * Visitor tracking — dashboards are private to your accounts only.
+ * - Vercel Analytics: enabled in layout via @vercel/analytics
+ * - Cloudflare Web Analytics: set NEXT_PUBLIC_CF_BEACON_TOKEN (from Cloudflare → Web Analytics)
+ * - Google Analytics 4: set NEXT_PUBLIC_GA_MEASUREMENT_ID (G-XXXXXXXX)
+ */
 export function GoogleAnalytics() {
   const id = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   if (!id) return null;
@@ -22,5 +27,20 @@ export function GoogleAnalytics() {
         `}
       </Script>
     </>
+  );
+}
+
+export function CloudflareAnalytics() {
+  const token = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+  if (!token) return null;
+
+  return (
+    <Script
+      id="cf-web-analytics"
+      strategy="afterInteractive"
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token })}
+    />
   );
 }

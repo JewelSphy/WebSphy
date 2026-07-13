@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { GoogleAnalytics } from "@/components/Analytics";
+import { GoogleAnalytics, CloudflareAnalytics } from "@/components/Analytics";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -58,6 +58,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics />
+        <CloudflareAnalytics />
       </body>
     </html>
   );

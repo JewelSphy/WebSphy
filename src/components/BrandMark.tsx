@@ -1,39 +1,59 @@
+import Image from "next/image";
 import Link from "next/link";
+import { site } from "@/lib/site";
 
-/** Text-based brand mark — avoids dumping the full logo PNG as a photo. */
+/** Real JewelSphy logo — monogram crop for nav, full lockup for hero. */
 export function BrandMark({
   size = "md",
   href = "/",
   showWordmark = true,
+  variant = "mark",
 }: {
   size?: "sm" | "md" | "lg";
-  href?: string;
+  href?: string | null;
   showWordmark?: boolean;
+  /** mark = circular monogram crop; full = full logo lockup */
+  variant?: "mark" | "full";
 }) {
-  const dims =
-    size === "sm"
-      ? "h-9 w-9 text-sm"
-      : size === "lg"
-        ? "h-16 w-16 text-2xl"
-        : "h-11 w-11 text-base";
+  if (variant === "full") {
+    const img = (
+      <Image
+        src="/brand/logo.png"
+        alt={`${site.name} — ${site.tagline}`}
+        width={640}
+        height={640}
+        priority
+        className="mx-auto h-auto w-full max-w-[280px] object-contain drop-shadow-[0_0_40px_rgba(201,162,39,0.25)] md:max-w-[340px]"
+      />
+    );
+    if (!href) return img;
+    return (
+      <Link href={href} className="inline-flex" aria-label={`${site.name} home`}>
+        {img}
+      </Link>
+    );
+  }
+
+  const dims = size === "sm" ? "h-9 w-9" : size === "lg" ? "h-14 w-14" : "h-11 w-11";
 
   const content = (
     <span className="group inline-flex items-center gap-3">
       <span
-        className={`relative inline-flex ${dims} items-center justify-center rounded-full border border-line-strong bg-bg-elevated shadow-[0_0_24px_rgba(201,162,39,0.12)]`}
-        aria-hidden
+        className={`relative ${dims} overflow-hidden rounded-full ring-1 ring-line-strong shadow-[0_0_20px_rgba(201,162,39,0.15)]`}
       >
-        <span className="font-display font-semibold tracking-tight text-gold-bright">
-          JS
-        </span>
-        <span className="absolute -right-0.5 -top-0.5 text-[0.55rem] text-gold sparkle">
-          ✦
-        </span>
+        <Image
+          src="/brand/logo.png"
+          alt=""
+          width={112}
+          height={112}
+          className="h-full w-full scale-[1.35] object-cover object-[center_12%]"
+          priority={size !== "sm"}
+        />
       </span>
       {showWordmark ? (
         <span className="leading-tight">
           <span className="font-display block text-xl tracking-wide text-gold-bright transition-colors group-hover:text-gold">
-            JewelSphy
+            {site.name}
           </span>
           <span className="hidden text-[0.65rem] uppercase tracking-[0.22em] text-ink-dim sm:block">
             Web Solutions
@@ -45,7 +65,7 @@ export function BrandMark({
 
   if (!href) return content;
   return (
-    <Link href={href} className="inline-flex" aria-label="JewelSphy home">
+    <Link href={href} className="inline-flex" aria-label={`${site.name} home`}>
       {content}
     </Link>
   );

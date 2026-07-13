@@ -432,6 +432,7 @@ export const services: Service[] = [
     description: [
       "A landing page keeps the message simple and moves people toward one action — book a call, join a waitlist, request a quote, or buy a single offer.",
       "JewelSphy designs these for startups and service offers that need something live quickly without paying boutique-agency rates.",
+      "A typical landing page includes a strong headline, trust signals, one or two clear CTAs, a form or booking path, basic SEO fields, and analytics events so you can see what works.",
       "Start here, learn what converts, then expand into a full website when you’re ready.",
     ],
     faqs: [
@@ -477,7 +478,8 @@ export const services: Service[] = [
     description: [
       "If your business needs a real online presence, JewelSphy builds sites that are clean, modern, and designed to help visitors take action.",
       "A good fit for consultants, local providers, startups, and growing teams that want more than a template — without an oversized agency engagement.",
-      "Every build focuses on practical deliverables: responsive design, lead forms, clear structure, and the basics that make the site easier to find and use.",
+      "Most business sites include a homepage, about, services, proof/testimonials, and contact — plus a lead form, mobile navigation, and analytics/Search Console setup.",
+      "Every build focuses on practical deliverables: responsive design, clear structure, and the basics that make the site easier to find and use.",
     ],
     faqs: [
       {
