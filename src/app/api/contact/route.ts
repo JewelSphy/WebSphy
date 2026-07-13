@@ -95,7 +95,7 @@ async function sendWithResend(fields: {
       `Name: ${fields.name}`,
       `Email: ${fields.email}`,
       `Service: ${fields.service}`,
-      `Budget: ${fields.budget}`,
+      `Project size: ${fields.budget}`,
       `Timeline: ${fields.timeline}`,
       "",
       fields.message,

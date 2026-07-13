@@ -72,8 +72,8 @@ export default function HomePage() {
               <Link href="/contact" className="btn btn-primary">
                 Start a project
               </Link>
-              <Link href="/pricing" className="btn btn-ghost">
-                See intro pricing
+              <Link href="/services" className="btn btn-ghost">
+                Explore services
               </Link>
             </div>
 
@@ -144,7 +144,7 @@ export default function HomePage() {
                   <p className="mt-2 max-w-2xl text-ink-muted">{service.summary}</p>
                 </div>
                 <div className="md:text-right">
-                  <p className="font-display text-2xl text-gold-bright">{service.price}</p>
+                  <p className="font-display text-xl text-gold-bright">{service.quote}</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.16em] text-ink-dim">
                     {service.timeline}
                   </p>
@@ -212,13 +212,13 @@ export default function HomePage() {
       <section className="section">
         <div className="section-inner">
           <div className="max-w-2xl">
-            <p className="eyebrow">Introductory pricing</p>
+            <p className="eyebrow">Packages</p>
             <h2 className="font-display mt-3 text-4xl text-ink md:text-5xl">
-              Startup-friendly packages. Upgrade when you grow.
+              Clear packages. Quoted to fit your project.
             </h2>
             <p className="prose-muted mt-4">
-              Starting rates match the JewelSphy flyer — accessible for early-stage teams, with
-              room to expand into richer builds as you need them.
+              We outline what’s included — then quote after a short discovery so the number matches
+              your real scope, not a one-size sticker price.
             </p>
           </div>
 
@@ -235,7 +235,7 @@ export default function HomePage() {
                 <p className="text-[0.65rem] uppercase tracking-[0.2em] text-gold">{pkg.badge}</p>
                 <h3 className="font-display mt-3 text-2xl text-ink">{pkg.name}</h3>
                 <p className="mt-2 text-sm text-ink-muted">{pkg.bestFor}</p>
-                <p className="mt-5 font-display text-4xl text-gold-bright">{pkg.price}</p>
+                <p className="mt-5 font-display text-3xl text-gold-bright">{pkg.quote}</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.16em] text-ink-dim">
                   {pkg.timeline}
                 </p>

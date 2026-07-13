@@ -28,8 +28,8 @@ export function ServicePage({ service }: { service: Service }) {
           </div>
           <dl className="mt-12 grid gap-4 border-y border-line py-6 sm:grid-cols-3">
             <div>
-              <dt className="text-xs uppercase tracking-[0.18em] text-ink-dim">Starting range</dt>
-              <dd className="mt-2 font-display text-2xl text-gold-bright">{service.price}</dd>
+              <dt className="text-xs uppercase tracking-[0.18em] text-ink-dim">Pricing</dt>
+              <dd className="mt-2 font-display text-2xl text-gold-bright">{service.quote}</dd>
             </div>
             <div>
               <dt className="text-xs uppercase tracking-[0.18em] text-ink-dim">Timeline</dt>
@@ -77,7 +77,7 @@ export function ServicePage({ service }: { service: Service }) {
               ))}
             </ul>
             <p className="mt-6 text-sm text-ink-dim">Typical stack: {service.stack}</p>
-            <p className="mt-2 text-sm text-ink-dim">Hourly reference: {service.hourly}</p>
+            <p className="mt-2 text-sm text-ink-dim">{service.hourly}</p>
             <Link href="/contact" className="btn btn-primary mt-8 w-full">
               Start this project
             </Link>

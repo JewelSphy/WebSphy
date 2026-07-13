@@ -20,7 +20,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-ink-muted">
               {[
                 ["/services", "Services"],
-                ["/pricing", "Pricing"],
+                ["/pricing", "Packages"],
                 ["/work", "Work"],
                 ["/process", "Process"],
                 ["/faq", "FAQ"],

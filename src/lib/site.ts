@@ -6,7 +6,7 @@ export const site = {
   motto: "Clean. Modern. Purposeful.",
   positioning:
     "JewelSphy builds modern websites and lightweight web applications for service businesses, founders, and personal brands. Clean design, fast performance, lead capture, scheduling, simple integrations, and content systems that are easy to manage.",
-  introNote: "Introductory pricing · Limited spots available",
+  introNote: "Custom quotes · Limited spots available",
   phone: "754-269-6238",
   phoneHref: "tel:7542696238",
   email: "jewelsphy@gmail.com",
@@ -19,7 +19,7 @@ export const site = {
 export const navLinks = [
   { href: "/services", label: "Services" },
   { href: "/work", label: "Work" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/pricing", label: "Packages" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -30,7 +30,7 @@ export const packages = [
     name: "Portfolio Website",
     badge: "Student friendly",
     bestFor: "Freelancers, creators, graduates, and personal brands",
-    price: "From $60",
+    quote: "Custom quote",
     timeline: "3–5 days",
     featured: false,
     includes: [
@@ -46,7 +46,7 @@ export const packages = [
     name: "Business Website",
     badge: "Perfect for startups",
     bestFor: "Local services, startups, and growing teams",
-    price: "From $95",
+    quote: "Custom quote",
     timeline: "5–7 days",
     featured: true,
     includes: [
@@ -62,7 +62,7 @@ export const packages = [
     name: "Custom Web App",
     badge: "Built for your needs",
     bestFor: "Dashboards, portals, and tailored workflows",
-    price: "From $120",
+    quote: "Custom quote",
     timeline: "Scoped per project",
     featured: false,
     includes: [
@@ -78,7 +78,7 @@ export const packages = [
     name: "Support & Updates",
     badge: "Ongoing care",
     bestFor: "Clients who want help after launch",
-    price: "From $25/mo",
+    quote: "Monthly plan · quoted",
     timeline: "Monthly",
     featured: false,
     includes: [
@@ -91,51 +91,51 @@ export const packages = [
   },
 ] as const;
 
-/** Domain, hosting, and launch extras — clear sticker prices where possible. */
+/** Domain, hosting, and launch extras — quoted with the project. */
 export const domainAndLaunch = [
   {
     name: ".com domain registration",
-    price: "$12–$18/yr",
+    quote: "Registrar rate",
     note: "Registrar cost — billed yearly in your name",
   },
   {
     name: "Other common TLDs (.net, .org, .io, .co)",
-    price: "$10–$40/yr",
+    quote: "Registrar rate",
     note: "Depends on the extension",
   },
   {
     name: "Domain purchase + DNS setup",
-    price: "$15",
+    quote: "Setup · quoted",
     note: "We buy/connect it and point it to your site",
   },
   {
     name: "Connect a domain you already own",
-    price: "$10",
+    quote: "Setup · quoted",
     note: "DNS records, SSL, and go-live checks",
   },
   {
     name: "Hosting setup (Cloudflare / modern host)",
-    price: "$10–$20",
+    quote: "Setup · quoted",
     note: "Deploy + custom domain wiring",
   },
   {
     name: "Business email setup",
-    price: "From $25",
+    quote: "Custom quote",
     note: "Plus Google Workspace / Zoho / provider monthly fee",
   },
   {
     name: "SSL certificate",
-    price: "Free",
+    quote: "Usually included",
     note: "Included with modern hosting",
   },
   {
     name: "Site migration (old host → new)",
-    price: "From $35",
+    quote: "Custom quote",
     note: "Content, DNS cutover, and redirect checks",
   },
   {
     name: "Premium / aftermarket domains",
-    price: "Quote per name",
+    quote: "Quoted per name",
     note: "Only when the domain itself is sold at a premium",
     variable: true,
   },
@@ -144,7 +144,7 @@ export const domainAndLaunch = [
 export type CatalogItem = {
   name: string;
   summary: string;
-  price: string;
+  quote: string;
   href?: string;
   /** Only for work where scope truly swings — keep rare. */
   variable?: boolean;
@@ -167,35 +167,35 @@ export const serviceCatalog: CatalogGroup[] = [
       {
         name: "Landing page",
         summary: "One focused page for a campaign, offer, or waitlist.",
-        price: "From $60",
+        quote: "Custom quote",
         href: "/services/landing-pages",
       },
       {
         name: "Portfolio / personal brand site",
         summary: "Up to 5 pages to showcase work, bio, and contact.",
-        price: "From $60",
+        quote: "Custom quote",
         href: "/pricing",
       },
       {
         name: "Business website",
         summary: "Up to 8 pages with services, proof, and lead capture.",
-        price: "From $95",
+        quote: "Custom quote",
         href: "/services/small-business-websites",
       },
       {
         name: "Multi-page growth site",
         summary: "Deeper service pages, blog/hub, and stronger CTA structure.",
-        price: "From $150",
+        quote: "Custom quote",
       },
       {
         name: "One-page brochure site",
         summary: "Everything on a single scroll — fast and clean.",
-        price: "From $55",
+        quote: "Custom quote",
       },
       {
         name: "Event / launch page",
         summary: "Date, details, RSVP or ticket link, and reminders.",
-        price: "From $50",
+        quote: "Custom quote",
       },
     ],
   },
@@ -207,28 +207,28 @@ export const serviceCatalog: CatalogGroup[] = [
       {
         name: "Website redesign",
         summary: "Visual refresh, clearer structure, better mobile flow.",
-        price: "From $75",
+        quote: "Custom quote",
         href: "/services/website-redesigns",
       },
       {
         name: "Homepage redesign only",
         summary: "Stronger first impression when the rest still works.",
-        price: "From $40",
+        quote: "Custom quote",
       },
       {
         name: "Mobile / UX cleanup",
         summary: "Navigation, spacing, and tap-target fixes.",
-        price: "From $35",
+        quote: "Custom quote",
       },
       {
         name: "Performance cleanup",
         summary: "Speed, image weight, and Core Web Vitals basics.",
-        price: "From $40",
+        quote: "Custom quote",
       },
       {
         name: "Content reorganization",
         summary: "Restructure pages and menus so services are easy to find.",
-        price: "From $30",
+        quote: "Custom quote",
       },
     ],
   },
@@ -240,37 +240,37 @@ export const serviceCatalog: CatalogGroup[] = [
       {
         name: ".com domain (yearly)",
         summary: "Registered in your name through a standard registrar.",
-        price: "$12–$18/yr",
+        quote: "Registrar rate",
       },
       {
         name: "Domain + DNS setup",
         summary: "We handle purchase, DNS, and pointing to your site.",
-        price: "$15 + domain",
+        quote: "Setup + registrar",
       },
       {
         name: "Connect existing domain",
         summary: "Wire a domain you already own — SSL included.",
-        price: "$10",
+        quote: "Setup · quoted",
       },
       {
         name: "Hosting / deploy setup",
         summary: "Cloudflare Pages or similar — accounts stay yours.",
-        price: "$10–$20",
+        quote: "Setup · quoted",
       },
       {
         name: "Business email setup",
         summary: "you@yourdomain.com via Google, Zoho, or similar.",
-        price: "From $25",
+        quote: "Custom quote",
       },
       {
         name: "Full launch package",
         summary: "Domain + hosting + SSL + go-live checklist.",
-        price: "From $35",
+        quote: "Custom quote",
       },
       {
         name: "Site migration",
         summary: "Move from an old host or builder to a cleaner setup.",
-        price: "From $35",
+        quote: "Custom quote",
       },
     ],
   },
@@ -282,45 +282,45 @@ export const serviceCatalog: CatalogGroup[] = [
       {
         name: "Contact / lead form",
         summary: "Form + email notification to your inbox.",
-        price: "From $20",
+        quote: "Custom quote",
       },
       {
         name: "Booking calendar embed",
         summary: "Cal.com or Calendly wired into your site.",
-        price: "From $25",
+        quote: "Custom quote",
         href: "/services/booking-integrations",
       },
       {
         name: "Stripe payment link",
         summary: "Collect a deposit or one-time payment.",
-        price: "From $25",
+        quote: "Custom quote",
         href: "/services/booking-integrations",
       },
       {
         name: "Booking + payment bundle",
         summary: "Schedule and collect in one flow.",
-        price: "From $40",
+        quote: "Custom quote",
         href: "/services/booking-integrations",
       },
       {
         name: "GA4 + Search Console",
         summary: "Analytics and search property setup.",
-        price: "From $20",
+        quote: "Custom quote",
       },
       {
         name: "CMS / blog setup",
         summary: "So your team can publish without asking every time.",
-        price: "From $40",
+        quote: "Custom quote",
       },
       {
         name: "Newsletter / email capture",
         summary: "Signup form into Mailchimp, Resend, or similar.",
-        price: "From $25",
+        quote: "Custom quote",
       },
       {
         name: "Basic SEO setup",
         summary: "Titles, meta, sitemap, and on-page structure.",
-        price: "From $30",
+        quote: "Custom quote",
       },
     ],
   },
@@ -332,25 +332,25 @@ export const serviceCatalog: CatalogGroup[] = [
       {
         name: "Custom web app (starter)",
         summary: "Login, simple dashboard, and core workflows.",
-        price: "From $120",
+        quote: "Custom quote",
         href: "/pricing",
       },
       {
         name: "Client portal",
         summary: "Secure area for files, status, or simple CRUD.",
-        price: "From $150",
+        quote: "Custom quote",
         variable: true,
       },
       {
         name: "Starter e-commerce store",
         summary: "Shopify or WooCommerce for a small catalog.",
-        price: "From $180",
+        quote: "Custom quote",
         variable: true,
       },
       {
         name: "Admin dashboard",
         summary: "Internal views, filters, and CSV export.",
-        price: "From $140",
+        quote: "Custom quote",
         variable: true,
       },
     ],
@@ -363,23 +363,23 @@ export const serviceCatalog: CatalogGroup[] = [
       {
         name: "Support & updates plan",
         summary: "Edits, updates, uptime checks, priority replies.",
-        price: "From $25/mo",
+        quote: "Monthly plan · quoted",
         href: "/services/maintenance",
       },
       {
         name: "Ad hoc hourly help",
         summary: "Small tasks without a monthly plan.",
-        price: "From $25/hr",
+        quote: "Hourly · quoted",
       },
       {
         name: "Content update pack",
         summary: "A batch of copy/image changes in one go.",
-        price: "From $25",
+        quote: "Custom quote",
       },
       {
         name: "Monthly care + report",
         summary: "Support plan plus a simple performance snapshot.",
-        price: "From $35/mo",
+        quote: "Monthly plan · quoted",
       },
     ],
   },
@@ -391,7 +391,7 @@ export type Service = {
   navLabel: string;
   headline: string;
   summary: string;
-  price: string;
+  quote: string;
   timeline: string;
   hourly: string;
   stack: string;
@@ -411,9 +411,9 @@ export const services: Service[] = [
       "Focused landing pages built around one goal: more signups, more leads, or more bookings.",
     summary:
       "One focused page for a service, launch, campaign, or waitlist — fast to ship, easy to test.",
-    price: "From $60",
+    quote: "Custom quote",
     timeline: "3–5 days",
-    hourly: "Flexible startup rates",
+    hourly: "Quoted after discovery",
     stack: "Next.js + Tailwind, or WordPress",
     benefits: [
       "One clear conversion goal per page",
@@ -456,9 +456,9 @@ export const services: Service[] = [
       "Custom websites for startups and service businesses that need to look credible and convert.",
     summary:
       "Multi-page sites for local services, freelancers, and early-stage companies — polished without agency bloat.",
-    price: "From $95",
+    quote: "Custom quote",
     timeline: "5–7 days",
-    hourly: "Flexible startup rates",
+    hourly: "Quoted after discovery",
     stack: "Next.js + Tailwind, or WordPress",
     benefits: [
       "Clear calls to action, not just pretty pages",
@@ -501,9 +501,9 @@ export const services: Service[] = [
       "Refresh what you already have — without starting from zero unless you actually need to.",
     summary:
       "Cleanup and redesign for sites that have content but need better UX, speed, structure, or credibility.",
-    price: "From $75",
+    quote: "Custom quote",
     timeline: "4–10 days",
-    hourly: "Flexible startup rates",
+    hourly: "Quoted after discovery",
     stack: "Existing CMS cleanup, or rebuild in Next.js / WordPress",
     benefits: [
       "Better credibility without bloated scope",
@@ -545,9 +545,9 @@ export const services: Service[] = [
       "Add scheduling, forms, email routing, and payment links that turn visits into booked work.",
     summary:
       "Connect booking, payments, and lead flow to a new build or an existing site.",
-    price: "From $40",
+    quote: "Custom quote",
     timeline: "2–5 days",
-    hourly: "Flexible startup rates",
+    hourly: "Quoted after discovery",
     stack: "Cal.com, Stripe Payment Links, email API, GA4",
     benefits: [
       "Booking and payments without custom billing systems",
@@ -584,9 +584,9 @@ export const services: Service[] = [
       "Ongoing help after launch — updates, backups, small edits, and a steady monthly pulse check.",
     summary:
       "Recurring support so your site stays healthy and small changes don’t turn into big projects.",
-    price: "From $25/mo",
+    quote: "Monthly plan · quoted",
     timeline: "Monthly",
-    hourly: "From $25/hr",
+    hourly: "Quoted after discovery",
     stack: "Hosting, CMS/package updates, backups, light reporting",
     benefits: [
       "Predictable monthly support",
@@ -666,11 +666,11 @@ export const workSamples = [
 export const globalFaqs = [
   {
     q: "Who is JewelSphy a good fit for?",
-    a: "Startups, service businesses, founders, and personal brands that need a credible site or lightweight web system — without enterprise pricing.",
+    a: "Startups, service businesses, founders, and personal brands that need a credible site or lightweight web system — without an oversized agency engagement.",
   },
   {
-    q: "Why are the prices introductory?",
-    a: "JewelSphy is building in public as a growing studio. Introductory rates help early clients ship now while the team scales. Scope stays honest either way.",
+    q: "How does pricing work?",
+    a: "Every project is quoted after a short discovery call. Scope, timeline, pages, and integrations determine the number — so we never lock you into a sticker price that doesn’t fit the work.",
   },
   {
     q: "What stack do you use?",
@@ -690,11 +690,11 @@ export const globalFaqs = [
   },
   {
     q: "Do you handle domains and hosting?",
-    a: "Yes. A .com usually runs about $12–$18/year at the registrar. We can buy and connect it for a $15 setup fee, or connect a domain you already own for $10. Hosting setup is typically $10–$20. Domains are always registered in your name.",
+    a: "Yes. Domains are registered in your name at standard registrar rates. We can purchase and connect a new domain, or wire up one you already own, plus hosting and business email setup — all quoted clearly before we start.",
   },
   {
     q: "What’s the support plan?",
-    a: "Support & updates starts at $25/month for edits, package updates, uptime checks, and priority replies. Hourly help is also available from $25/hr.",
+    a: "Support plans cover edits, package updates, uptime checks, and priority replies. Monthly care or ad hoc hourly help are both available — quoted to match how much help you want.",
   },
 ] as const;
 

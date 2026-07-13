@@ -57,7 +57,7 @@ export default function AboutPage() {
           {[
             {
               title: "Startup-friendly",
-              body: "Introductory packages that help early-stage teams launch without boutique pricing.",
+              body: "Clear packages and custom quotes that help early-stage teams launch without boutique agency bloat.",
             },
             {
               title: "Modern stack",

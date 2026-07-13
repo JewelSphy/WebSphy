@@ -118,15 +118,15 @@ export function ContactForm() {
         </div>
         <div>
           <label className="label" htmlFor="budget">
-            Budget range
+            Project size
           </label>
-          <select id="budget" name="budget" className="select" defaultValue="From $95">
-            <option>From $60 (portfolio / landing)</option>
-            <option>From $95 (business site)</option>
-            <option>From $120 (custom app)</option>
-            <option>Support $25/mo</option>
-            <option>Domain / hosting only</option>
-            <option>Not sure yet</option>
+          <select id="budget" name="budget" className="select" defaultValue="Full website">
+            <option>Landing / portfolio</option>
+            <option>Full website</option>
+            <option>Custom app / portal</option>
+            <option>Ongoing support</option>
+            <option>Domain / hosting help</option>
+            <option>Not sure yet — let’s discuss</option>
           </select>
         </div>
       </div>

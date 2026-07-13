@@ -15,7 +15,7 @@ export function CTA({
   primaryHref = "/contact",
   primaryLabel = "Start a project",
   secondaryHref = "/pricing",
-  secondaryLabel = "View pricing",
+  secondaryLabel = "View packages",
 }: CTAProps) {
   return (
     <section className="section">

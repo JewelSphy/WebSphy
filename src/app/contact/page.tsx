@@ -70,7 +70,7 @@ export default function ContactPage() {
         <div className="border border-line bg-bg-elevated/50 p-6 md:p-8">
           <h2 className="font-display text-2xl text-ink">Project inquiry</h2>
           <p className="mt-2 text-sm text-ink-muted">
-            Share service interest, timeline, and budget so we can reply with a useful next step.
+            Share service interest, timeline, and project size so we can reply with a useful next step.
           </p>
           <div className="mt-6">
             <ContactForm />

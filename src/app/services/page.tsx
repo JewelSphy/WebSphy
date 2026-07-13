@@ -6,7 +6,7 @@ import { domainAndLaunch, serviceCatalog, services } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Full JewelSphy service catalog — websites, redesigns, domains, hosting, integrations, apps, and support from $25/mo.",
+    "Full JewelSphy service catalog — websites, redesigns, domains, hosting, integrations, apps, and support. Custom quotes after discovery.",
 };
 
 export default function ServicesPage() {
@@ -21,17 +21,15 @@ export default function ServicesPage() {
             Services
           </p>
           <h1 className="font-display mt-4 max-w-3xl text-4xl text-ink md:text-6xl">
-            Everything we build — listed clearly.
+            What we build — explained clearly.
           </h1>
           <p className="prose-muted mt-5 max-w-2xl">
-            From landing pages and business sites to domains, email, booking, and monthly support.
-            Sticker prices where we can. A few custom builds are scoped after a quick chat.
+            From landing pages and business sites to domains, email, booking, and ongoing support.
+            Every engagement is scoped and quoted after we understand your goals — so the number
+            matches the real work.
           </p>
 
-          <nav
-            className="mt-10 flex flex-wrap gap-2"
-            aria-label="Service categories"
-          >
+          <nav className="mt-10 flex flex-wrap gap-2" aria-label="Service categories">
             {serviceCatalog.map((group) => (
               <a
                 key={group.id}
@@ -45,13 +43,12 @@ export default function ServicesPage() {
               href="#domains-hosting"
               className="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink-muted transition hover:border-gold hover:text-gold-bright"
             >
-              Domain price list
+              Domains & launch
             </a>
           </nav>
         </div>
       </section>
 
-      {/* Featured detail pages */}
       <section className="section pt-0">
         <div className="section-inner">
           <p className="eyebrow">Deep dives</p>
@@ -73,9 +70,14 @@ export default function ServicesPage() {
                     {service.shortName}
                   </h3>
                 </div>
-                <p className="text-ink-muted">{service.summary}</p>
+                <div>
+                  <p className="text-ink-muted">{service.summary}</p>
+                  <p className="mt-2 text-sm text-ink-dim">
+                    Includes: {service.deliverables.slice(0, 2).join(" · ")}
+                  </p>
+                </div>
                 <div className="md:text-right">
-                  <p className="font-display text-xl text-gold-bright">{service.price}</p>
+                  <p className="font-display text-lg text-gold-bright">{service.quote}</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.16em] text-ink-dim">
                     {service.timeline}
                   </p>
@@ -87,7 +89,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Full catalog */}
       {serviceCatalog.map((group) => (
         <section
           key={group.id}
@@ -115,7 +116,7 @@ export default function ServicesPage() {
                         <p className="mt-1 text-sm text-ink-muted">{item.summary}</p>
                       </div>
                       <div className="shrink-0 text-left sm:text-right">
-                        <p className="font-display text-lg text-gold-bright">{item.price}</p>
+                        <p className="font-display text-lg text-gold-bright">{item.quote}</p>
                         {item.variable ? (
                           <p className="mt-1 text-xs text-ink-dim">Scoped to your build</p>
                         ) : null}
@@ -146,17 +147,16 @@ export default function ServicesPage() {
         </section>
       ))}
 
-      {/* Domain price sheet */}
       <section id="domains-hosting" className="scroll-mt-24 border-t border-line">
         <div className="section section-inner !py-14 md:!py-16">
           <div className="max-w-2xl">
-            <p className="eyebrow">Domain & launch sheet</p>
+            <p className="eyebrow">Domains & launch</p>
             <h2 className="font-display mt-3 text-3xl text-ink md:text-4xl">
               Domains, hosting, email, and go-live
             </h2>
             <p className="prose-muted mt-3">
-              Domains are registered in your name. Yearly renewal is the registrar’s price —
-              our fee is only for setup and connection when you want help.
+              Domains are registered in your name. Yearly renewals are the registrar’s rate. Our
+              setup work is quoted with your project.
             </p>
           </div>
 
@@ -165,7 +165,7 @@ export default function ServicesPage() {
               <thead className="border-b border-line bg-bg-elevated/80 text-xs uppercase tracking-[0.16em] text-ink-dim">
                 <tr>
                   <th className="px-5 py-4 font-medium md:px-6">Item</th>
-                  <th className="px-5 py-4 font-medium md:px-6">Price</th>
+                  <th className="px-5 py-4 font-medium md:px-6">How it’s billed</th>
                   <th className="hidden px-5 py-4 font-medium md:table-cell md:px-6">Notes</th>
                 </tr>
               </thead>
@@ -177,7 +177,7 @@ export default function ServicesPage() {
                       <p className="mt-1 text-ink-muted md:hidden">{row.note}</p>
                     </td>
                     <td className="whitespace-nowrap px-5 py-4 font-display text-base text-gold-bright md:px-6">
-                      {row.price}
+                      {row.quote}
                     </td>
                     <td className="hidden px-5 py-4 text-ink-muted md:table-cell md:px-6">
                       {row.note}
@@ -192,7 +192,7 @@ export default function ServicesPage() {
 
       <CTA
         title="Not sure what you need?"
-        body="Tell us what you’re launching. We’ll point you to the right line items — no mystery bundles."
+        body="Tell us what you’re launching. We’ll recommend the right services and send a clear quote."
       />
     </>
   );
